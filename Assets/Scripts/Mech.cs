@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Mech : MonoBehaviour
 {
-    private Rigidbody _rigidBody;
     public GameObject torso;
-    public float speed = 10f;
+    public GameObject rightMuzzle;
+    public GameObject leftMuzzle;
+    public GameObject projectile;
+    public float movementSpeed = 2f;
+    public float rotationSpeed = 100f;
 
     // Start is called before the first frame update
     void Start()
     {
-        _rigidBody = GetComponent<Rigidbody>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         HandleEvents();
         HandleTranslation();
@@ -28,10 +31,10 @@ public class Mech : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            transform.Translate(Vector3.forward * Time.deltaTime * movementSpeed);
         } else if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector3.back * Time.deltaTime * speed);
+            transform.Translate(Vector3.back * Time.deltaTime * movementSpeed);
         }
     }
 
@@ -39,10 +42,10 @@ public class Mech : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            torso.transform.Rotate(Vector3.down);
+            torso.transform.Rotate(Vector3.down * Time.deltaTime * rotationSpeed);
         } else if (Input.GetKey(KeyCode.E))
         {
-            torso.transform.Rotate(Vector3.up);
+            torso.transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed);
         }
     }
 
@@ -50,16 +53,26 @@ public class Mech : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Rotate(Vector3.down);
+            transform.Rotate(Vector3.down * Time.deltaTime * rotationSpeed);
         } else if (Input.GetKey(KeyCode.RightArrow))
         {
-           transform.Rotate(Vector3.up);
+           transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed);
         }
     }
 
     void HandleFiring()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject leftBullet = (GameObject) Instantiate(projectile, leftMuzzle.transform.position, 
+            leftMuzzle.transform.rotation);
 
+            GameObject rightBullet = (GameObject) Instantiate(projectile, rightMuzzle.transform.position, 
+            rightMuzzle.transform.rotation);
+    
+        // Rigidbody projectileRb = projectileGO.GetComponent<Rigidbody>();
+        // projectileRb.AddForce(throwForce * Vector3.forward, ForceMode.Impulse);
+        }
     }
 
     void HandleEvents()

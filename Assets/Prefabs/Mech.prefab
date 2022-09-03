@@ -442,4 +442,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   torso: {fileID: 3805893164919756400}
-  speed: 0.1
+  movementSpeed: 10
+  rotationSpeed: 10
